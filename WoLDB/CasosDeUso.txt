@@ -1,0 +1,69 @@
+1- Consulta de jugadores con el número de personajes desbloqueados:
+
+SELECT jugadores.NombreUsuario, COUNT(jugadorespersonajes.PersonajeID) AS Total FROM jugadores
+JOIN jugadorespersonajes ON jugadores.ID = jugadorespersonajes.JugadorID
+GROUP BY jugadores.ID
+ORDER BY Total DESC;
+
+2- Consulta de los miembros por equipo.
+
+SELECT jugadores.NombreUsuario, equipos.NombreEquipo FROM jugadores
+JOIN equipos ON jugadores.EquipoID = equipos.ID
+ORDER BY equipos.NombreEquipo DESC;
+
+3- Consulta de personajes con sus habilidades.
+
+SELECT personajes.NombrePersonaje, habilidades.NombreHabilidad, habilidades.Descripcion FROM personajes
+JOIN habilidades ON personajes.ID = habilidades.PersonajeID
+ORDER BY personajes.NombrePersonaje;
+
+4- Consulta de equipos con más de N miembros.
+
+SELECT equipos.NombreEquipo, COUNT(jugadores.ID) AS NumeroMiembros FROM jugadores
+JOIN equipos ON jugadores.EquipoID = equipos.ID
+GROUP BY equipos.ID
+HAVING NumeroMiembros > N
+ORDER BY NumeroMiembros DESC
+
+5- Consulta del personaje más desbloqueado
+Output: NombrePersonaje,# VecesDesbloqueado
+
+SELECT personajes.NombrePersonaje COUNT (jugadorespersonajes.PersonajeID) AS VecesDesbloqueado FROM personajes
+JOIN jugadorespersonajes ON personajes.ID = jugadorespersonajes.PersonajeID
+GROUP BY VecesDesbloqueado
+ORDER BY VecesDesbloqueado DESC
+LIMIT 1;
+
+6- Consulta de equipos ordenados por miembros
+Output: NombreEquipo, #NumeroMiembros
+
+SELECT equipos.NombreEquipo, COUNT jugadores.ID) AS TOTAL FROM 
+JOIN equipos ON jugadores.EquipoID = equipos.ID
+GROUP BY equipos.ID
+ORDER BY Total DESC;
+
+7- Consulta de equipos con mayor puntos de desbloqueo de sus jugadores
+Output: NombreEquipo, #PuntosDesbloqueoTotales
+
+8- Consulta jugador con la mayor cantidad de puntos de desbloqueo
+Output: NombreJugador, PuntosDesbloqueo
+
+SELECT jugadores.NombreUsuario, jugadores.PuntosDesbloqueo FROM jugadores
+ORDER BY jugadores.PuntosDesbloqueo desc;
+
+9- Consulta de jugadores con más de 4 personajes desbloqueados
+Output: NombreJugador, #PersonajesDesbloqueados
+
+SELECT jugadores.NombreUsuario , COUNT(jugadorespersonajes.PersonajeID) AS CantidadPerso FROM jugadores
+JOIN jugadorespersonajes ON jugadores.ID = jugadorespersonajes.JugadorID
+GROUP BY jugadores.ID
+HAVING CantidadPerso >= 4
+
+10- Consulta del total de puntos gastados por jugador
+Output: NombreJugador, #PuntosGastados
+
+SELECT jugadores.NombreUsuario, SUM(personajes.PuntosDesbloqueo) AS RPGASTADOS FROM jugadores
+JOIN jugadorespersonajes ON jugadores.ID = jugadorespersonajes.JugadorID
+JOIN personajes ON jugadorespersonajes.PersonajeID = personajes.ID
+GROUP BY jugadores.ID
+ORDER BY RPGASTADOS DESC;
